@@ -1,22 +1,21 @@
 {
-    "name": "bolyfci/livewire-multiselect",
-    "description": "Livewire multiselect component",
+    "name": "kauffinger/livewire-multiselect",
+    "description": "Livewire multiselect component for Laravel 9",
     "keywords": [
-        "bolyfci",
-        "livewire-multiselect"
+        "livewire-multiselect",
+        "laravel 9"
     ],
     "homepage": "https://github.com/bolyfci/livewire-multiselect",
     "license": "MIT",
     "authors": [
         {
-            "name": "ahmed abdelaal",
-            "email": "ahmed.abdelaal1921@mail.com",
-            "role": "Developer"
+            "name": "Konstantin Auffinger",
+            "email": "konstantin.auffinger@inno-brain.de"
         }
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/contracts": "^8.0",
+        "illuminate/contracts": "^8.0 | ^9.0",
         "spatie/laravel-package-tools": "^1.1"
     },
     "require-dev": {
