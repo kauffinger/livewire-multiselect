@@ -1,10 +1,10 @@
-<div style="width: {{$attributes->get('width') ?: "400px"}};">
+<div>
     <div x-data="dropdown()" {{$attributes->wire('model')}}>
         <div class="relative" wire:ignore>
             <div class="flex flex-col items-center relative">
                 <div class="w-full">
-                    <div class="p-1 flex border border-gray-200 bg-white rounded">
-                        <div class="flex flex-auto flex-wrap">
+                    <div class="input input-bordered flex">
+                        <div class="flex flex-auto flex-wrap overflow-auto">
                             <template x-for="(option,index) in selected" :key="option[trackBy]">
                                 <div
                                     class="flex justify-center items-center m-1 font-medium py-1 px-1 bg-white rounded bg-green-500 border">
@@ -24,7 +24,7 @@
                             </template>
                             <div class="flex-1">
                                 <input placeholder="{{$attributes->get('placeholder') ?: 'Select Option'}}"
-                                       class="bg-transparent p-1 px-2 appearance-none  outline-none h-full w-full text-gray-800">
+                                       class="bg-transparent p-1 px-2 appearance-none  outline-none h-full w-full text-gray-800" disabled>
                             </div>
                         </div>
                         <div class="text-gray-300 w-8 py-1 pl-2 pr-1  flex items-center border-gray-200">
