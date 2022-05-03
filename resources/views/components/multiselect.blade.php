@@ -1,5 +1,30 @@
 <div>
-    <div x-data="dropdown()" {{$attributes->wire('model')}}>
+    <div x-data="{
+        options: {{ $options }},
+        selected: @entangle($attributes->wire('model')),
+        trackBy: @js($trackBy),
+        title: @js($label),
+        show: false,
+        open() {
+            this.show = true;
+        },
+        close() {
+            this.show = false;
+        },
+        select(option, $dispatch) {
+            this.inSelected(option) ? this.remove(option, $dispatch) : this.selected.push(option);
+        },
+        inSelected(option) {
+            return this.selected.find(item => item[this.trackBy] == option[this.trackBy])
+        },
+        remove(option) {
+            this.options = this.options.map((item) => {
+                item.selected = item[this.trackBy] == option[this.trackBy] ? false : true;
+                return item;
+            })
+            this.selected = this.selected.filter(item => item[this.trackBy] != option[this.trackBy])
+        }
+    }" {{$attributes->wire('model')}}>
         <div class="relative" wire:ignore>
             <div class="flex flex-col items-center relative">
                 <div class="w-full">
@@ -77,38 +102,4 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        function dropdown() {
-            return {
-                options: @json($options) ? @json($options) : [],
-                selected: @entangle($attributes->wire('model')),
-                trackBy:@json($trackBy),
-                title:@json($label),
-                show: false,
-                open() {
-                    this.show = true;
-                },
-                close() {
-                    this.show = false;
-                },
-                select(option, $dispatch) {
-                    this.inSelected(option) ? this.remove(option, $dispatch) : this.selected.push(option);
-                },
-                inSelected(option) {
-                    return this.selected.find(item => item[this.trackBy] == option[this.trackBy])
-                }
-                ,
-                remove(option) {
-                    this.options = this.options.map((item) => {
-                        item.selected = item[this.trackBy] == option[this.trackBy] ? false : true;
-                        return item;
-                    })
-                    this.selected = this.selected.filter(item => item[this.trackBy] != option[this.trackBy])
-                }
-            }
-        }
-    </script>
-@endpush
 
