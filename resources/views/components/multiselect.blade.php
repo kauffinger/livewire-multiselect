@@ -32,7 +32,7 @@
                         <div class="flex flex-auto flex-wrap overflow-auto">
                             <template x-for="(option,index) in selected" :key="option[trackBy]">
                                 <div
-                                    class="flex justify-center items-center m-1 font-medium py-1 px-1 bg-white rounded bg-green-500 border">
+                                    class="flex justify-center items-center m-1 font-medium py-1 px-1 rounded bg-green-500 border">
                                     <div class="text-xs text-white font-normal leading-none max-w-full flex-initial"
                                          x-text="option[title]"></div>
                                     <div class="flex flex-auto flex-row-reverse">
