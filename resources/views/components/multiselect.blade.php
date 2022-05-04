@@ -48,7 +48,7 @@
                                 </div>
                             </template>
                             <div class="flex-1">
-                                <input placeholder="{{$attributes->get('placeholder') ?: 'Select Option'}}"
+                                <input placeholder="{{$attributes->get('placeholder') ?: 'Wählen'}}"
                                        class="bg-transparent p-1 px-2 appearance-none  outline-none h-full w-full text-gray-800" disabled>
                             </div>
                         </div>
