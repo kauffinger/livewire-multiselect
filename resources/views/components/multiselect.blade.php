@@ -12,60 +12,59 @@
             this.show = false;
         },
         select(option, $dispatch) {
-            this.inSelected(option) ? this.remove(option, $dispatch) : this.selected.push(option);
+            this.inSelected(option) ? this.remove(option, $dispatch) : this.selected.push(option.id);
         },
         inSelected(option) {
-            return this.selected.find(item => item[this.trackBy] == option[this.trackBy])
+            return this.selected.find(item => item == option.id)
         },
         remove(option) {
             this.options = this.options.map((item) => {
                 item.selected = item[this.trackBy] == option[this.trackBy] ? false : true;
                 return item;
             })
-            this.selected = this.selected.filter(item => item[this.trackBy] != option[this.trackBy])
+            this.selected = this.selected.filter(item => item != option.id)
         }
-    }" {{$attributes->wire('model')}}>
+    }" {{ $attributes->wire('model') }}>
         <div class="relative" wire:ignore>
             <div class="flex flex-col items-center relative">
                 <div class="w-full">
                     <div class="input input-bordered flex">
                         <div class="flex flex-auto flex-wrap overflow-auto">
-                            <template x-for="(option,index) in selected" :key="option[trackBy]">
+                            <template x-for="(id,index) in selected" :key="id">
                                 <div
                                     class="flex justify-center items-center m-1 font-medium py-1 px-1 rounded bg-green-500 border">
                                     <div class="text-xs text-white font-normal leading-none max-w-full flex-initial"
-                                         x-text="option[title]"></div>
+                                        x-text="options.find(item => item.id == id)[title]"></div>
                                     <div class="flex flex-auto flex-row-reverse">
-                                        <div x-on:click.stop="remove(option)">
+                                        <div x-on:click.stop="remove(options.find(item => item.id == id))">
                                             <svg class="w-4 h-4 cursor-pointer" fill="none" stroke="currentColor"
-                                                 viewBox="0 0 24 24"
-                                                 xmlns="http://www.w3.org/2000/svg">
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M6 18L18 6M6 6l12 12"></path>
+                                                    d="M6 18L18 6M6 6l12 12"></path>
                                             </svg>
                                         </div>
                                     </div>
                                 </div>
                             </template>
                             <div class="flex-1">
-                                <input placeholder="{{$attributes->get('placeholder') ?: 'Wählen'}}"
-                                       class="bg-transparent p-1 px-2 appearance-none  outline-none h-full w-full text-gray-800" disabled>
+                                <input placeholder="{{ $attributes->get('placeholder') ?: 'Wählen' }}"
+                                    class="bg-transparent p-1 px-2 appearance-none  outline-none h-full w-full text-gray-800"
+                                    disabled>
                             </div>
                         </div>
                         <div class="text-gray-300 w-8 py-1 pl-2 pr-1  flex items-center border-gray-200">
 
                             <button type="button"
-                                    class="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none">
+                                class="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none">
                                 <svg x-show="show" x-on:click="close" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M19 9l-7 7-7-7"></path>
+                                        d="M19 9l-7 7-7-7"></path>
                                 </svg>
                                 <svg x-show="!show" x-on:click="open" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24"
-                                     xmlns="http://www.w3.org/2000/svg">
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M5 15l7-7 7 7"></path>
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </button>
                         </div>
@@ -75,11 +74,8 @@
                     <div class="absolute shadow top-100 bg-white z-40 w-full left-0 rounded max-h-select">
                         <div class="flex flex-col w-full overflow-y-auto max-h-64">
                             <template x-for="(option,index) in options" :key="option[trackBy]" class="overflow-auto">
-                                <div
-                                    class="cursor-pointer w-full border-gray-100 rounded"
-                                    @click="select(option)">
-                                    <div
-                                        :class="inSelected(option) ? 'hover:bg-red-400' : 'hover:bg-green-400'"
+                                <div class="cursor-pointer w-full border-gray-100 rounded" @click="select(option)">
+                                    <div :class="inSelected(option) ? 'hover:bg-red-400' : 'hover:bg-green-400'"
                                         class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative">
                                         <div class="w-full items-center flex justify-between">
                                             <div class="mx-2 leading-6" x-text="option[title]"></div>
@@ -88,7 +84,7 @@
                                 </div>
                             </template>
                             <div x-show="!options.length"
-                                 class="cursor-pointer w-full border-gray-100 rounded border-b border-solid ">
+                                class="cursor-pointer w-full border-gray-100 rounded border-b border-solid ">
                                 <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative">
                                     <div class="w-full items-center flex justify-between">
                                         <div class="mx-2 leading-6"> List Is empty</div>
@@ -102,4 +98,3 @@
         </div>
     </div>
 </div>
-
